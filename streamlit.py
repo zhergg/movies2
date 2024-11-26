@@ -8,10 +8,12 @@ import plotly.express as px
 st.set_page_config(page_title="Movie Dashboard", layout="wide")
 
 # Initialize Firestore
-if not firebase_admin._apps:
-    cred = credentials.Certificate(r'C:\Users\USER\Downloads\movies-e8cf6-firebase-adminsdk-kbwp5-6673a7d660.json')
-    firebase_admin.initialize_app(cred)
+if not firebase_admin._apps:  # Ensure Firebase is initialized only once
+    firebase_creds = dict(st.secrets["firebase"])  # Convert secrets to a dictionary
+    cred = credentials.Certificate(firebase_creds)  # Use the dictionary directly
+    firebase_admin.initialize_app(cred)  # Initialize Firebase app
 
+# Firestore client
 db = firestore.client()
 
 # Fetch all movie data

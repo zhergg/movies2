@@ -24,7 +24,6 @@ movie_data = [movie.to_dict() for movie in movies]
 all_movies_df = pd.DataFrame(movie_data)  
 movies_df = all_movies_df.copy()         
 
-# Safely parse genres_list
 def safe_parse_genres(value):
     try:
         if isinstance(value, str) and value.startswith("[") and value.endswith("]"):
@@ -298,6 +297,9 @@ movies_df = movies_df[movies_df['mapped_production_countries'].apply(lambda x: i
 movies_df['release_year'] = pd.to_numeric(movies_df.get('release_year', pd.Series([])), errors='coerce')
 movies_df['popularity'] = pd.to_numeric(movies_df.get('popularity', pd.Series([])), errors='coerce')
 
+
+
+
 # Authentication
 if "logged_in_user" not in st.session_state:
     st.session_state.logged_in_user = None
@@ -448,7 +450,7 @@ if st.session_state.logged_in_user:
             # Calculate percentage for each country
             country_counts['Percentage'] = (country_counts['Count'] / country_counts['Count'].sum()) * 100
 
-        
+            # Prepare data for the line chart
             release_year_data = all_movies_df.groupby('release_year').size().reset_index(name='Count')
 
             # Column 1: Display the geographical scatter map

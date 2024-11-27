@@ -449,7 +449,7 @@ if st.session_state.logged_in_user:
             country_counts['Percentage'] = (country_counts['Count'] / country_counts['Count'].sum()) * 100
 
         
-           release_year_data = all_movies_df.groupby('release_year').size().reset_index(name='Count')
+            release_year_data = all_movies_df.groupby('release_year').size().reset_index(name='Count')
 
             # Column 1: Display the geographical scatter map
             with col1:

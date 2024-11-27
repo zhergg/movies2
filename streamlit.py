@@ -21,8 +21,8 @@ movies_ref = db.collection('movies2')
 movies = movies_ref.stream()
 movie_data = [movie.to_dict() for movie in movies]
 
-# Convert Firestore data to DataFrame
-movies_df = pd.DataFrame(movie_data)
+all_movies_df = pd.DataFrame(movie_data)  
+movies_df = all_movies_df.copy()         
 
 # Safely parse genres_list
 def safe_parse_genres(value):
@@ -448,8 +448,8 @@ if st.session_state.logged_in_user:
             # Calculate percentage for each country
             country_counts['Percentage'] = (country_counts['Count'] / country_counts['Count'].sum()) * 100
 
-            # Prepare data for the line chart
-            release_year_data = movies_df.groupby('release_year').size().reset_index(name='Count')
+        
+           release_year_data = all_movies_df.groupby('release_year').size().reset_index(name='Count')
 
             # Column 1: Display the geographical scatter map
             with col1:
